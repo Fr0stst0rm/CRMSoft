@@ -10,6 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import CRMSoft.host.BusinessLayer;
 import CRMSoft.host.BusinessLayerInterface;
 import CRMSoft.host.PluginSaveData;
 import PluginInterface.client.PluginInterface;
@@ -38,7 +39,7 @@ public class Controller implements ActionListener {
 
 	public Controller() {
 
-		businessLayer = new BusinessLayer();
+		businessLayer = BusinessLayer.getInstance();
 		
 		v = new View();
 

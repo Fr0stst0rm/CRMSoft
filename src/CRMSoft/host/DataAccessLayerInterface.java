@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public interface DataAccessLayerInterface {
 
-	void openConnection(String path);
+	void openConnection();
 
 	void closeConnection();
 

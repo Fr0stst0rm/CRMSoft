@@ -11,7 +11,7 @@ import PluginInterface.client.PluginInterface;
 
 public class PluginManager {
 
-	static HashMap<String, PluginInterface> loadedPlugins = new HashMap<>();
+	public static HashMap<String, PluginInterface> loadedPlugins = new HashMap<>();
 	
 	public static HashMap<String, PluginInterface> loadPlugins() {
 

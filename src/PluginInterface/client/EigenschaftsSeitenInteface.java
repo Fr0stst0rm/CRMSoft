@@ -8,7 +8,5 @@ public interface EigenschaftsSeitenInteface {
 	Map<String, String> getPluginData();
 
 	void setPluginData(Map<String, String> data);
-	
-	
 
 }
