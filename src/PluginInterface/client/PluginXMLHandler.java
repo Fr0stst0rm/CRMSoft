@@ -1,4 +1,4 @@
-package MyFirstPlugin;
+package PluginInterface.client;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,8 +16,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.*;
-
-import PluginInterface.client.PluginXMLHandlerInterface;
 import org.xml.sax.SAXException;
 
 public class PluginXMLHandler implements PluginXMLHandlerInterface{

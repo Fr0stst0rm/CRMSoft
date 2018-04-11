@@ -1,8 +1,7 @@
-package MyFirstPlugin;
+package Kaese;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
@@ -16,7 +15,7 @@ import PluginInterface.client.PluginXMLHandler;
 
 public class Plugin implements PluginInterface {
 	
-	private String name = "MyFirstPlugin";
+	private String name = "Kaese";
 
 	private PluginXMLHandler xmlHandler = new PluginXMLHandler();
 
