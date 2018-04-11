@@ -33,7 +33,11 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
         NodeList childNodes = parentNode.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node node = childNodes.item(i);
-            Values.put(node.getNodeName(), node.getChildNodes().item(0).getNodeValue());
+            String value = "";
+            if(node.getChildNodes().item(0) != null) {
+            	value =  node.getChildNodes().item(0).getNodeValue();
+            }
+            Values.put(node.getNodeName(),value);
         }
 
         return Values;

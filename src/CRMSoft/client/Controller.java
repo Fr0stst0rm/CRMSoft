@@ -55,6 +55,7 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals(v.loadBtn.getActionCommand())) {
 			System.out.println("Loading " + v.getActivePluginName() + " data for " + v.nameTextField.getText());
+			businessLayer.getData(v.nameTextField.getText(), v.getActivePluginName());
 		} else if (e.getActionCommand().equals(v.saveBtn.getActionCommand())) {
 			System.out.println("Saving " + v.getActivePluginName() + " data for " + v.nameTextField.getText());
 			businessLayer.saveData(v.nameTextField.getText(), v.getActivePluginName());

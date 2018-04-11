@@ -1,6 +1,9 @@
 package CRMSoft.host;
 
-public class PluginSaveData {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class PluginSaveData implements Serializable{
 	
 	public String pluginName;
 	public String xmlPath;

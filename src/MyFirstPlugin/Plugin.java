@@ -1,5 +1,6 @@
 package MyFirstPlugin;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,17 +21,19 @@ public class Plugin implements PluginInterface {
 
 	private PluginView view = new PluginView();
 
-	private String currentXML = "";
+	private File currentXML = new File("");
 
 	@Override
 	public void loadXML(String xmlFileName) {
-		currentXML = xmlFileName;
+		currentXML = new File(getXMLPath() + xmlFileName);
 		
-		System.out.println("Loading data from "+ getXMLPath() + currentXML);
+		if(currentXML.exists()) {
+		
+		System.out.println("Loading data from "+ currentXML.getPath() );
 		
 		try {
 			
-			setData(xmlHandler.loadXML(getXMLPath() + currentXML));
+			setData(xmlHandler.loadXML(currentXML.getPath()));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,17 +44,31 @@ public class Plugin implements PluginInterface {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		} else {
+			System.err.println(currentXML.getName()+ " does not exist!");
+		}
 	}
 
 	@Override
 	public void saveToXML(String xmlFileName) {
+		currentXML = new File(getXMLPath() + xmlFileName);
 		
-		currentXML = xmlFileName;
+		if(currentXML.exists()) {
+			currentXML.delete();
+		}
 		
-		System.out.println("Saving data to "+ getXMLPath() + currentXML);
+		try {
+			currentXML.getParentFile().mkdirs();
+			currentXML.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println("Saving data to "+ currentXML.getPath());
 				
 		try {
-			xmlHandler.createXML(getData(), getXMLPath() + currentXML);
+			xmlHandler.createXML(getData(), currentXML.getPath());
 		} catch (TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +80,7 @@ public class Plugin implements PluginInterface {
 
 	@Override
 	public String getXMLPath() {
-		return "/xml/" + getName() + "/";
+		return "xml/" + getName() + "/";
 	}
 
 	@Override
