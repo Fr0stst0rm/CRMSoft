@@ -1,4 +1,4 @@
-package CRMSoft.client;
+package MyFirstPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,8 +23,8 @@ import org.xml.sax.SAXException;
 public class PluginXMLHandler implements PluginXMLHandlerInterface{
 
 	@Override
-	public Map<String, String> loadXML(String path) throws ParserConfigurationException, IOException, SAXException {
-        File xmlFile = new File(System.getProperty("user.dir")+"/XML/"+path);
+	public Map<String, String> loadXML(String pathToFile) throws ParserConfigurationException, IOException, SAXException {
+        File xmlFile = new File(pathToFile);
         Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile.getAbsolutePath());
 
         Element parentNode = (Element) doc.getElementsByTagName("data").item(0);
@@ -39,8 +39,9 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
         return Values;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void createXML(Map<String, String> Values, String fileName) throws TransformerException, ParserConfigurationException {
+	public void createXML(Map<String, String> Values, String pathToFile) throws TransformerException, ParserConfigurationException {
 
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -50,9 +51,9 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
 		Element rootElement = doc.createElement("data");
 		doc.appendChild(rootElement);
 
-        Iterator it = Values.entrySet().iterator();
+        Iterator<?> it = Values.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
             //System.out.println(pair.getKey() + " = " + pair.getValue());
             Element entry = doc.createElement((String) pair.getKey());
             entry.appendChild(doc.createTextNode((String)pair.getValue()));
@@ -65,7 +66,7 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
 		Transformer transformer = transformerFactory.newTransformer();
 
 		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(System.getProperty("user.dir")+"\\XML\\"+fileName+".xml"));
+		StreamResult result = new StreamResult(new File(pathToFile));
 
 		// Output to console for testing
         //StreamResult result = new StreamResult(System.out);

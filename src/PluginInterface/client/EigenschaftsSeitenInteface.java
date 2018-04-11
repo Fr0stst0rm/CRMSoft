@@ -1,11 +1,13 @@
 package PluginInterface.client;
 
+import java.util.Map;
+
 //TODO zu JPanel machen
 public interface EigenschaftsSeitenInteface {
 	
-	void setPluginData(PluginXMLHandlerInterface data);
+	Map<String, String> getPluginData();
 
-	PluginXMLHandlerInterface getPluginData();
+	void setPluginData(Map<String, String> data);
 	
 	
 

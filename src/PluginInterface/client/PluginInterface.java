@@ -2,7 +2,7 @@ package PluginInterface.client;
 
 import javax.swing.JPanel;
 
-public interface PuginInterface {
+public interface PluginInterface {
 
 	void loadXML(String path);
 	void saveToXML();
