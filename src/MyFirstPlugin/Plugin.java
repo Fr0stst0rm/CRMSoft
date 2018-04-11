@@ -13,14 +13,14 @@ import PluginInterface.client.PluginInterface;
 
 public class Plugin implements PluginInterface {
 	
-	String name = "MyFirstPlugin";
+	private String name = "MyFirstPlugin";
 
-	PluginXMLHandler xmlHandler = new PluginXMLHandler();
-	
-	PluginView view = new PluginView();
+	private PluginXMLHandler xmlHandler = new PluginXMLHandler();
 
-	String currentXML = "";
-	HashMap<String, String> data = new HashMap<>();
+	private PluginView view = new PluginView();
+
+	private String currentXML = "";
+	private HashMap<String, String> data = new HashMap<>();
 	
 	@Override
 	public void loadXML(String xmlFileName) {
