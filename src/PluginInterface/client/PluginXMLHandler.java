@@ -57,8 +57,8 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
         while (it.hasNext()) {
             Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
             //System.out.println(pair.getKey() + " = " + pair.getValue());
-            Element entry = doc.createElement((String) pair.getKey());
-            entry.appendChild(doc.createTextNode((String)pair.getValue()));
+            Element entry = doc.createElement((String) pair.getKey().replaceAll("[^\\p{IsAlphabetic}^\\p{IsDigit}]", ""));
+            entry.appendChild(doc.createTextNode((String)pair.getValue().replaceAll("[^\\p{IsAlphabetic}^\\p{IsDigit}]", "")));
             rootElement.appendChild(entry);
             it.remove(); // avoids a ConcurrentModificationException
         }
