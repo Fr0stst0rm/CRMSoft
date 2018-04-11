@@ -8,6 +8,6 @@ public interface BusinessLayerInterface {
 
 	PluginSaveData getData(String customerName, String plugin);
 
-	void saveData(String customerName, PluginSaveData data);
+	void saveData(String customerName, String plugin);
 
 }

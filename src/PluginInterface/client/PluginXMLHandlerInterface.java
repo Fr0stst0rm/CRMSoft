@@ -9,8 +9,8 @@ import java.util.Map;
 
 public interface PluginXMLHandlerInterface {
 	
-	Map<String,String> loadXML(String path) throws ParserConfigurationException, IOException, SAXException;
+	Map<String,String> loadXML(String xmlFileName) throws ParserConfigurationException, IOException, SAXException;
 	
-	void createXML(Map<String,String> Values, String pathName) throws TransformerException, ParserConfigurationException;
+	void createXML(Map<String,String> Values, String xmlFileName) throws TransformerException, ParserConfigurationException;
 
 }

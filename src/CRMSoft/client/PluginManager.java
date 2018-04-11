@@ -5,14 +5,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import PluginInterface.client.PluginInterface;
 
 public class PluginManager {
 
-	public static ArrayList<PluginInterface> loadPlugins() {
-
-		ArrayList<PluginInterface> loadedPlugins = new ArrayList<>();
+	static HashMap<String, PluginInterface> loadedPlugins = new HashMap<>();
+	
+	public static HashMap<String, PluginInterface> loadPlugins() {
 
 		File pluginPath = new File("plugins");
 
@@ -33,7 +34,7 @@ public class PluginManager {
 
 					System.out.println(pluginInstance.getName() + " loaded");
 
-					loadedPlugins.add(pluginInstance);
+					loadedPlugins.put(pluginInstance.getName(), pluginInstance);
 
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block

@@ -2,6 +2,7 @@ package MyFirstPlugin;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JPanel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,13 +21,16 @@ public class Plugin implements PluginInterface {
 	PluginView view = new PluginView();
 
 	String currentXML = "";
-	HashMap<String, String> data = new HashMap<>();
-	
+		
 	@Override
 	public void loadXML(String xmlFileName) {
 		currentXML = xmlFileName;
+		
+		System.out.println("Loading data from "+ getXMLPath() + currentXML);
+		
 		try {
-			data = (HashMap<String, String>) xmlHandler.loadXML(getXMLPath() + currentXML);
+			
+			setData(xmlHandler.loadXML(getXMLPath() + currentXML));
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,9 +44,14 @@ public class Plugin implements PluginInterface {
 	}
 
 	@Override
-	public void saveToXML() {
+	public void saveToXML(String xmlFileName) {
+		
+		currentXML = xmlFileName;
+		
+		System.out.println("Saving data to "+ getXMLPath() + currentXML);
+				
 		try {
-			xmlHandler.createXML(data, getXMLPath() + currentXML);
+			xmlHandler.createXML(getData(), getXMLPath() + currentXML);
 		} catch (TransformerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -71,6 +80,16 @@ public class Plugin implements PluginInterface {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public Map<String, String> getData() {
+		return view.getPluginData();
+	}
+
+	@Override
+	public void setData(Map<String, String> data) {
+		view.setPluginData(data);		
 	}
 
 }
