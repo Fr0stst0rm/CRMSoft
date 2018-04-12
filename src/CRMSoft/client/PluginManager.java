@@ -7,7 +7,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.jar.JarEntry;
@@ -48,10 +47,13 @@ public class PluginManager {
 						// -6 because of .class
 						String className = je.getName().substring(0, je.getName().length() - 6);
 						className = className.replace('/', '.');
-						if (className.equals(plugin.getName().split("\\.")[0] + ".Plugin")) {
-							Class classToLoad = cLoder.loadClass(className);
-							Constructor<?> constructor = classToLoad.getConstructor();
-							PluginInterface pluginInstance = (PluginInterface) constructor.newInstance();
+						Class classToLoad = cLoder.loadClass(className);
+						Constructor<?> constructor = classToLoad.getConstructor();
+						Object instance = constructor.newInstance();
+
+						if (instance instanceof PluginInterface) {
+
+							PluginInterface pluginInstance = (PluginInterface) instance;
 
 							System.out.println(pluginInstance.getName() + " loaded");
 

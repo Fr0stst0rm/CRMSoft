@@ -18,27 +18,27 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-public class PluginXMLHandler implements PluginXMLHandlerInterface{
+public class PluginXMLHandler implements PluginXMLHandlerInterface {
 
 	@Override
 	public Map<String, String> loadXML(String pathToFile) throws ParserConfigurationException, IOException, SAXException {
-        File xmlFile = new File(pathToFile);
-        Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile.getAbsolutePath());
+		File xmlFile = new File(pathToFile);
+		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFile.getAbsolutePath());
 
-        Element parentNode = (Element) doc.getElementsByTagName("data").item(0);
-        Map<String, String> Values = new HashMap<>();
+		Element parentNode = (Element) doc.getElementsByTagName("data").item(0);
+		Map<String, String> Values = new HashMap<>();
 
-        NodeList childNodes = parentNode.getChildNodes();
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node node = childNodes.item(i);
-            String value = "";
-            if(node.getChildNodes().item(0) != null) {
-            	value =  node.getChildNodes().item(0).getNodeValue();
-            }
-            Values.put(node.getNodeName(),value);
-        }
+		NodeList childNodes = parentNode.getChildNodes();
+		for (int i = 0; i < childNodes.getLength(); i++) {
+			Node node = childNodes.item(i);
+			String value = "";
+			if (node.getChildNodes().item(0) != null) {
+				value = node.getChildNodes().item(0).getNodeValue();
+			}
+			Values.put(node.getAttributes().getNamedItem("label").getNodeValue(), value);
+		}
 
-        return Values;
+		return Values;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -53,15 +53,16 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
 		Element rootElement = doc.createElement("data");
 		doc.appendChild(rootElement);
 
-        Iterator<?> it = Values.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, String> pair = (Map.Entry<String, String>)it.next();
-            //System.out.println(pair.getKey() + " = " + pair.getValue());
-            Element entry = doc.createElement((String) pair.getKey().replaceAll("[^\\p{IsAlphabetic}^\\p{IsDigit}]", ""));
-            entry.appendChild(doc.createTextNode((String)pair.getValue().replaceAll("[^\\p{IsAlphabetic}^\\p{IsDigit}]", "")));
-            rootElement.appendChild(entry);
-            it.remove(); // avoids a ConcurrentModificationException
-        }
+		Iterator<?> it = Values.entrySet().iterator();
+		for (int i = 0; it.hasNext(); i++) {
+			Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
+			// System.out.println(pair.getKey() + " = " + pair.getValue());
+			Element entry = doc.createElement("Value" + i);
+			entry.setAttribute("label", pair.getKey());
+			entry.appendChild(doc.createTextNode(pair.getValue()));
+			rootElement.appendChild(entry);
+			it.remove(); // avoids a ConcurrentModificationException
+		}
 
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -71,12 +72,12 @@ public class PluginXMLHandler implements PluginXMLHandlerInterface{
 		StreamResult result = new StreamResult(new File(pathToFile));
 
 		// Output to console for testing
-        //StreamResult result = new StreamResult(System.out);
+		// StreamResult result = new StreamResult(System.out);
 
 		transformer.transform(source, result);
 
 		System.out.println("File saved!");
-		
+
 	}
 
 }
